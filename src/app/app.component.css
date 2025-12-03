@@ -1,0 +1,181 @@
+/* App component styles for a simple appointment app */
+
+/* Host fills viewport and centers content */
+:host {
+    display: block;
+    min-height: 100vh;
+    background: linear-gradient(180deg, #f7f9fc 0%, #ffffff 100%);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    color: #222;
+    padding: 24px;
+    box-sizing: border-box;
+}
+
+/* Main app container */
+.app-container {
+    max-width: 960px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 20px;
+    align-items: start;
+}
+
+/* Header / title */
+.app-header {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+.app-title {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #0f1724;
+}
+.app-subtitle {
+    font-size: 0.9rem;
+    color: #6b7280;
+}
+
+/* Left column: list of appointments */
+.app-list {
+    background: #fff;21
+    border-radius: 10px;
+    padding: 16px;
+    box-shadow: 0 6px 20px rgba(16,24,40,0.06);
+}
+.app-list h2 {
+    margin: 0 0 12px 0;
+    font-size: 1.1rem;
+    color: #0f1724;
+}
+.app-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px;
+    border-radius: 8px;
+    align-items: center;
+    border: 1px solid rgba(15,23,36,0.04);
+    margin-bottom: 10px;
+    transition: background .12s ease, transform .08s ease;
+}
+.app-item:hover {
+    background: #fbfdff;
+    transform: translateY(-2px);
+}
+.app-item .meta {
+    display: flex;
+    flex-direction: column;
+}
+.app-item .title {
+    font-weight: 600;
+    color: #0f1724;
+}
+.app-item .time {
+    font-size: 0.85rem;
+    color: #6b7280;
+}
+
+/* Right column: form / details */
+.app-form {
+    background: #fff;
+    border-radius: 10px;
+    padding: 16px;
+    box-shadow: 0 6px 20px rgba(16,24,40,0.06);
+    height: fit-content;
+}
+.app-form h3 {
+    margin: 0 0 12px 0;
+    font-size: 1.05rem;
+}
+.field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+.field label {
+    font-size: 0.85rem;
+    color: #374151;
+    margin-bottom: 6px;
+}
+.field input[type="text"],
+.field input[type="datetime-local"],
+.field textarea,
+.field select {
+    padding: 10px 12px;
+    border: 1px solid #e6e9ee;
+    border-radius: 8px;
+    background: #fff;
+    font-size: 0.95rem;
+    color: #0f1724;
+    outline: none;
+    transition: box-shadow .12s ease, border-color .12s ease;
+}
+.field input:focus,
+.field textarea:focus,
+.field select:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 4px 14px rgba(59,130,246,0.08);
+}
+
+.field textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+/* Buttons */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    border: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+.btn-primary {
+    background: linear-gradient(180deg,#2563eb,#1d4ed8);
+    color: white;
+    box-shadow: 0 6px 18px rgba(37,99,235,0.18);
+}
+.btn-ghost {
+    background: transparent;
+    color: #374151;
+    border: 1px solid #e6e9ee;
+}
+
+/* Empty state */
+.empty {
+    text-align: center;
+    color: #6b7280;
+    padding: 24px;
+}
+
+/* Small screens: stack columns */
+@media (max-width: 880px) {
+    .app-container {
+        grid-template-columns: 1fr;
+    }
+    .app-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+}
+
+/* Utility */
+.row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+.small {
+    font-size: 0.85rem;
+    color: #6b7280;
+}
