@@ -282,4 +282,12 @@
         align-items: flex-start;
         gap: 8px
     }
+
+    .app-footer {
+        grid-column: 1/-1;
+        text-align: center;
+        margin-top: 18px;
+        color: #6b7280;
+        font-size: .85rem;
+    }
 }
