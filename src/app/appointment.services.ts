@@ -16,7 +16,9 @@ export interface Appointment {
     providedIn: 'root'
 })
 export class AppoitmentService {
-    apiUrl = `${environment.apiUrl}/appointments`;
+    // Use environment.apiUrl when provided, otherwise fall back to relative path
+    private base = (environment.apiUrl || '').replace(/\/$/, '');
+    apiUrl = this.base ? `${this.base}/appointments` : '/appointments';
 
     constructor(private http: HttpClient) { }
 
