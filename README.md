@@ -14,38 +14,7 @@
 2. Install frontend dependencies:
    ```sh
 AppointmentApp is a meeting management application built with Angular and a Node.js + SQLite backend.## Features
-AppointmentApp is a meeting management application built with Angular and a Node.js + SQLite backend.## Features
-AppointmentApp is a meeting management application built with Angular and a Node.js + SQLite backend.## Features
-AppointmentApp is a meeting management application built with Angular and a Node.js + SQLite backend.## Features
-AppointmentApp is a meeting management application built with Angular and a Node.js + SQLite backend.## Features
-AppointmentApp is a meeting management application built with Angular and a Node.js + SQLite backend.## Features
-AppointmentApp is a meeting management application built with Angular and a Node.js + SQLite backend.## Features
-AppointmentApp is a meeting management application built with Angular and a Node.js + SQLite backend.## Features
-AppointmentApp is a meeting management application built with Angular and a N ode.js + SQLite backend.## Features
-AppointmentApp is a meeting management application built with Angular and a Node.js + SQLite backend.## Features
-AppointmentApp is a meeting management application built with Angular and a Node.js + SQLite backend.## Features
-AppointmentApp is a meeting management application built with Angular and a Node.js + SQLite backend.## Features
-AppointmentApp is a meeting management application built with Angular and a Node.js + SQLite backend.## Features
-AppointmentApp is a meeting management application built with Angular and a Node.js + SQLite backend.## Features
-AppointmentApp is a meeting management application built with Angular and a Node.js + SQLite backend.## Features
-AppointmentApp is a meeting management application built with Angular and a Node.js + SQLite backend.## Features
-AppointmentApp is a meeting management application built with Angular and a Node.js + SQLite backend.## Features
-   npm install
-
-
-
-
-   
-
-
-
-
-
-
-
-
-
-
+   "npm install" 
 
 
    ```
@@ -54,40 +23,7 @@ AppointmentApp is a meeting management application built with Angular and a Node
    npm install express cors sqlite3
    ```
 
-
-
-
-   
-
-
-
-
-
-
-
-
-
-
-
-
-
 ## Running the app
-
-
-
-
-   
-
-
-
-
-
-
-
-
-
-
-
 
 
 ### Backend (Node.js + SQLite)
@@ -120,4 +56,4 @@ ng test
 - SQLite
 
 ## Author
-Demo project.
+Rafał Wójcicki

@@ -1,18 +1,27 @@
-import { HttpClientModule } from '@angular/common/http';
+import express from 'express';
+import cors from 'cors';
+import sqlite3 from 'sqlite3';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import fs from 'fs';
 
-const express = require('express');
-const cors = require('cors');
-const sqlite3 = require('sqlite3').verbose();
 const app = express();
-const db = new sqlite3.Database('./appointments.db');
+const PORT = process.env.PORT || 3000;
+const NODE_ENV = process.env.NODE_ENV || 'development';
+const DB_PATH = process.env.DATABASE_URL || './appointments.db';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const db = new sqlite3.Database(DB_PATH);
 
 app.use(cors());
-app.use(express.json())
+app.use(express.json());
 
-const sqlQuery = 'CREATE TABLE appointments (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, date TEXT, time TEXT, notes TEXT, important INTEGER)';
+const sqlQuery = 'CREATE TABLE IF NOT EXISTS appointments (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, date TEXT, time TEXT, notes TEXT, important INTEGER)';
 db.run(sqlQuery);
 
-
+// API Routes
 app.get('/appointments', (req, res) => {
     db.all('SELECT * FROM appointments', [], (err, rows) => {
         if (err) return res.status(500).json({ error: err.message });
@@ -36,4 +45,27 @@ app.delete('/appointments/:id', (req, res) => {
   });
 });
 
-app.listen(3000, () => console.log('Server running on http://localhost:3000'));
+// Serve static Angular frontend files (production only)
+if (NODE_ENV === 'production') {
+  const candidates = [
+    path.join(__dirname, 'dist', 'appointment-app', 'browser'),
+    path.join(__dirname, 'dist', 'appointment-app'),
+    path.join(__dirname, 'dist')
+  ];
+
+  const distPath = candidates.find(p => fs.existsSync(p));
+  if (distPath) {
+    app.use(express.static(distPath));
+    app.get('*', (req, res) => {
+      res.sendFile(path.join(distPath, 'index.html'));
+    });
+  } else {
+    console.warn('No frontend dist directory found. Make sure build produces files in /dist');
+  }
+}
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+  console.log(`Environment: ${NODE_ENV}`);
+  console.log(`Database: ${DB_PATH}`);
+});
