@@ -1,27 +1,123 @@
 # AppointmentApp
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.6.
 
-## Development server
+- Add, view, and delete appointments
+- Mark appointments as important
+- Monthly calendar view
+- Store appointments in a SQLite database via Node.js backend
+## Requirements
+- Node.js (v16+)
+- npm
+## Installation
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+1. Clone the repository or download the project.
+2. Install frontend dependencies:
+   ```sh
+AppointmentApp is a meeting management application built with Angular and a Node.js + SQLite backend.## Features
+AppointmentApp is a meeting management application built with Angular and a Node.js + SQLite backend.## Features
+AppointmentApp is a meeting management application built with Angular and a Node.js + SQLite backend.## Features
+AppointmentApp is a meeting management application built with Angular and a Node.js + SQLite backend.## Features
+AppointmentApp is a meeting management application built with Angular and a Node.js + SQLite backend.## Features
+AppointmentApp is a meeting management application built with Angular and a Node.js + SQLite backend.## Features
+AppointmentApp is a meeting management application built with Angular and a Node.js + SQLite backend.## Features
+AppointmentApp is a meeting management application built with Angular and a Node.js + SQLite backend.## Features
+AppointmentApp is a meeting management application built with Angular and a N ode.js + SQLite backend.## Features
+AppointmentApp is a meeting management application built with Angular and a Node.js + SQLite backend.## Features
+AppointmentApp is a meeting management application built with Angular and a Node.js + SQLite backend.## Features
+AppointmentApp is a meeting management application built with Angular and a Node.js + SQLite backend.## Features
+AppointmentApp is a meeting management application built with Angular and a Node.js + SQLite backend.## Features
+AppointmentApp is a meeting management application built with Angular and a Node.js + SQLite backend.## Features
+AppointmentApp is a meeting management application built with Angular and a Node.js + SQLite backend.## Features
+AppointmentApp is a meeting management application built with Angular and a Node.js + SQLite backend.## Features
+AppointmentApp is a meeting management application built with Angular and a Node.js + SQLite backend.## Features
+   npm install
 
-## Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+   
 
-## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
-## Further help
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+
+
+
+
+
+   ```
+3. Install backend dependencies:
+   ```sh
+   npm install express cors sqlite3
+   ```
+
+
+
+
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Running the app
+
+
+
+
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+### Backend (Node.js + SQLite)
+In the project root directory, run:
+```sh
+node server.js
+```
+The server will start at http://localhost:3000
+
+### Frontend (Angular)
+In a new terminal, run:
+```sh
+ng serve
+```
+The app will be available at http://localhost:4200
+
+## Configuration
+- The default database file is `appointments.db` in the project root.
+- Backend API: `GET/POST/DELETE http://localhost:3000/appointments`
+
+## Testing
+To run unit tests:
+```sh
+ng test
+```
+
+## Technologies
+- Angular 16
+- Node.js + Express
+- SQLite
+
+## Author
+Demo project.

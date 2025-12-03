@@ -359,7 +359,7 @@
         <div *ngIf="appt.notes" style="margin-top:8px">{{ appt.notes }}</div>
       </div>
       <div>
-        <button (click)="deleteAppointment(appt.id)"
+        <button *ngIf="appt.id !== undefined" (click)="deleteAppointment(appt.id)"
           style="background:#e53935;color:#fff;border:none;padding:6px 8px;border-radius:4px;">Remove</button>
       </div>
     </li>
@@ -386,7 +386,7 @@
     <div class="weeks">
       <div class="week" *ngFor="let week of calendarWeeks">
         <div class="day" *ngFor="let day of week" 
-        [class.other-month]="!day.inMonth"
+        [class.other-month]="!day.isMonth"
         [class.has-events]="getAppointmentsForDate(day.iso).length > 0"
         [class.has-important]="hasImportantForDate(day.iso)">
           <div class="day-header" (click)="toggleDay(day.iso)">
@@ -404,7 +404,7 @@
                 <div class="event-time small">{{ (e.date + 'T' + (e.time || '00:00')) | date:'HH:mm' }}</div>
                 <div class="event-date small">{{ e.date | date:'dd.MM.yyyy' }}</div>
                 <div class="event-actions">
-                  <button class="btn btn-ghost" (click)="deleteAppointment(e.id)">Usuń</button>
+                  <button class="btn btn-ghost" *ngIf="e.id !== undefined" (click)="deleteAppointment(e.id)">Usuń</button>
                 </div>
               </div>
             </div>

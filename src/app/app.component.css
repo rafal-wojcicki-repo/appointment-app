@@ -41,7 +41,7 @@
 
 /* Left column: list of appointments */
 .app-list {
-    background: #fff;21
+    background: #fff;
     border-radius: 10px;
     padding: 16px;
     box-shadow: 0 6px 20px rgba(16,24,40,0.06);
@@ -77,6 +77,79 @@
 .app-item .time {
     font-size: 0.85rem;
     color: #6b7280;
+}
+
+.calendar {
+    margin-top: 16px;
+    background: #fff;
+    border-radius: 10px;
+    padding: 12px;
+    box-shadow: 0 6px 20px rgba(16,24,40,0.04);
+}
+.calendar-header {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:8px;
+}
+.month-label { font-weight:600; }
+
+.weekdays {
+    display:grid;
+    grid-template-columns: repeat(7,1fr);
+    gap:6px;
+    margin-bottom:6px;
+}
+.weekday { text-align:center; font-size:0.8rem; color:#6b7280; }
+
+.weeks { display:flex; flex-direction:column; gap:6px; }
+.week { display:grid; grid-template-columns: repeat(7,1fr); gap:6px; }
+
+.day {
+    background: #fbfdff;
+    border-radius:8px;
+    min-height: 74px;
+    padding:6px;
+    border:1px solid transparent;
+    position:relative;
+}
+.day.other-month { opacity:0.45; }
+.day.has-events { box-shadow: 0 1px 0 rgba(16,24,40,0.02); }
+
+.day-header { display:flex; justify-content:space-between; align-items:center; cursor:pointer; padding-bottom:6px; }
+.day-num { font-weight:700; }
+.day.has-important {
+    /* outline zamiast border, aby nie przesuwać układu */
+    outline: 2px solid #ef4444;
+    outline-offset: -2px;
+    box-shadow: 0 6px 18px rgba(239,68,68,0.06);
+}
+
+.event-count { background:#e6f0ff; color:#1e3a8a; padding:2px 6px; border-radius:999px; font-size:0.75rem; }
+
+.day-panel { margin-top:6px; max-height:220px; overflow:auto; }
+
+.event-list { display:flex; flex-direction:column; gap:6px; }
+.event-item {
+    padding:8px;
+    border-radius:8px;
+    background:#fff;
+    border:1px solid rgba(15,23,36,0.06);
+    display:flex;
+    justify-content:space-between;
+    gap:8px;
+    align-items:center;
+}
+.event-item .event-title { font-weight:600; }
+.event-item.important {
+    border: 2px solid #ef4444; /* czerwona obwódka dla ważnych */
+    box-shadow: 0 6px 18px rgba(239,68,68,0.08);
+}
+
+/* adjust for small screens */
+@media (max-width:880px) {
+  .calendar { padding:10px; }
+  .day { min-height:64px; }
 }
 
 /* Right column: form / details */

@@ -1,13 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
-interface Appointment {
-  id: number;
-  title: string;
-  date: string; // ISO date
-  time?: string;
-  notes?: string;
-  important?: boolean;
-}
+import { AppoitmentService, Appointment } from './appointment.services';
 
 @Component({
   selector: 'app-root',
@@ -31,8 +23,17 @@ export class AppComponent implements OnInit {
     important: false
   };
 
+  constructor(private appointmentService: AppoitmentService) {}
+
   ngOnInit(): void {
     this.buildCalendar();
+    this.loadAppointments();
+  }
+
+  loadAppointments() {
+    this.appointmentService.getAppointments().subscribe((data: Appointment[]) => {
+      this.appointments = data;
+    });
   }
 
   addAppointment(form?: any) {
@@ -40,34 +41,26 @@ export class AppComponent implements OnInit {
       this.buildCalendar();
       return;
     }
-
     const appt: Appointment = {
-      id: Date.now(),
       title: this.model.title as string,
       date: this.model.date as string,
-      time: this.model.time,
+      time: this.model.time || '',
       notes: this.model.notes,
       important: !!this.model.important
     };
-
-    // Newest first
-    if (appt.important) {
-      this.appointments = [appt, ...(this.appointments ?? [])];
-    } else {
-      const important = (this.appointments ?? []).filter(a => a.important);
-      const nonImportant = (this.appointments ?? []).filter(a => !a.important);
-      this.appointments = [...important, appt, ...nonImportant];
-    }
-
-    // Clear model and form
-    this.model = { title: '', date: '', time: '', notes: '', important: false };
-    if (form && form.resetForm) {
-      form.resetForm();
-    }
+    this.appointmentService.addAppointment(appt).subscribe(() => {
+      this.loadAppointments();
+      this.model = { title: '', date: '', time: '', notes: '', important: false };
+      if (form && form.resetForm) {
+        form.resetForm();
+      }
+    });
   }
 
   deleteAppointment(id: number) {
-    this.appointments = this.appointments.filter(a => a.id !== id);
+    this.appointmentService.deleteAppointment(id).subscribe(() => {
+      this.loadAppointments();
+    });
   }
 
   trackById(index: number, item: Appointment) {
