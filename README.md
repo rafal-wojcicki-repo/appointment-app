@@ -120,4 +120,4 @@ ng test
 - SQLite
 
 ## Author
-Demo project.
+Rafał Wójcicki
