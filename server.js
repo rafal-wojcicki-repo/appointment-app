@@ -54,9 +54,10 @@ if (NODE_ENV === 'production') {
   ];
 
   const distPath = candidates.find(p => fs.existsSync(p));
-  if (distPath) {
+    if (distPath) {
     app.use(express.static(distPath));
-    app.get('*', (req, res) => {
+    // use '/*' instead of '*' to avoid path-to-regexp parsing issues in some environments
+    app.get('/*', (req, res) => {
       res.sendFile(path.join(distPath, 'index.html'));
     });
   } else {
