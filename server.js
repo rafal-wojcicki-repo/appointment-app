@@ -56,8 +56,12 @@ if (NODE_ENV === 'production') {
   const distPath = candidates.find(p => fs.existsSync(p));
     if (distPath) {
     app.use(express.static(distPath));
-    // use '/*' instead of '*' to avoid path-to-regexp parsing issues in some environments
-    app.get('/*', (req, res) => {
+    // Fallback: serve index.html for any GET request that is not an API call.
+    // Use app.use with a function to avoid path-to-regexp parsing of '*' patterns.
+    app.use((req, res, next) => {
+      if (req.method !== 'GET') return next();
+      // Adjust API prefix if you use a different one
+      if (req.path.startsWith('/appointments') || req.path.startsWith('/api')) return next();
       res.sendFile(path.join(distPath, 'index.html'));
     });
   } else {
