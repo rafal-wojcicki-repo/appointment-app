@@ -1,59 +1,63 @@
+
 # AppointmentApp
 
+Lightweight meeting planner: Angular frontend + Express/SQLite backend. Works locally or on Heroku (serving the built Angular app from Node).
 
-- Add, view, and delete appointments
+## Highlights
+- Add, view, delete appointments
 - Mark appointments as important
-- Monthly calendar view
-- Store appointments in a SQLite database via Node.js backend
-## Requirements
-- Node.js (v16+)
-- npm
-## Installation
+- Month calendar view with per-day counts
+- SQLite persistence locally (ephemeral on Heroku)
 
-1. Clone the repository or download the project.
-2. Install frontend dependencies:
-   ```sh
-AppointmentApp is a meeting management application built with Angular and a Node.js + SQLite backend.## Features
-   "npm install" 
+## Tech stack
+- Angular 16 (TypeScript)
+- Node.js 18 + Express 5
+- SQLite (`appointments.db`)
 
+## Quick start (local dev)
+Requirements: Node.js 18+, npm
 
-   ```
-3. Install backend dependencies:
-   ```sh
-   npm install express cors sqlite3
-   ```
+```powershell
+# install dependencies
+npm ci
 
-## Running the app
-
-
-### Backend (Node.js + SQLite)
-In the project root directory, run:
-```sh
+# start backend API (http://localhost:3000)
 node server.js
-```
-The server will start at http://localhost:3000
 
-### Frontend (Angular)
-In a new terminal, run:
-```sh
-ng serve
-```
-The app will be available at http://localhost:4200
-
-## Configuration
-- The default database file is `appointments.db` in the project root.
-- Backend API: `GET/POST/DELETE http://localhost:3000/appointments`
-
-## Testing
-To run unit tests:
-```sh
-ng test
+# in another terminal: start frontend (dev)
+npx ng serve --open
 ```
 
-## Technologies
-- Angular 16
-- Node.js + Express
-- SQLite
+## Local production build & run
+```powershell
+npm ci
+npm run build          # builds frontend to dist/appointment-app
+npm start              # runs server.js and serves dist
+```
+
+## Environment variables
+- `PORT` – listen port (default 3000; overridden on Heroku)
+- `DATABASE_URL` – SQLite file path (default `./appointments.db`)
+
+## REST API
+- `GET /appointments` – list appointments
+- `POST /appointments` – { title, date, time, notes?, important? }
+- `DELETE /appointments/:id` – delete appointment
+
+## Tests
+```powershell
+npm test -- --watch=false --browsers=ChromeHeadless
+```
+
+## Heroku deploy (short)
+1) `heroku create <app-name>`
+2) `git push heroku main`
+3) Note: SQLite on Heroku is ephemeral — use Heroku Postgres for production. See `HEROKU_DEPLOYMENT.md` for details.
+
+## Why it’s candidate-friendly
+- Clear FE/BE split, simple data model
+- Simple manual deploy to Heroku
+- Minimal env config (prod/dev) with relative-API fallback in production build
 
 ## Author
-Rafał Wójcicki
+Rafal Wojcicki

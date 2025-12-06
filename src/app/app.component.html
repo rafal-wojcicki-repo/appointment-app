@@ -335,8 +335,8 @@
       <input name="date" [(ngModel)]="model.date" required type="date"
         style="padding:8px;border:1px solid #ddd;border-radius:4px;" />
       <input name="time" [(ngModel)]="model.time" type="time"
-        style="padding:8px;border:1px solid #ddd;border-radius:4px;" step="60" lang="pl" />
-      <input type="checkbox" name="important" [(ngModel)]="model.important" /> Ważne
+        style="padding:8px;border:1px solid #ddd;border-radius:4px;" step="60" />
+      <input type="checkbox" name="important" [(ngModel)]="model.important" /> Important
     </div>
     <div style="margin-top:8px;">
       <textarea name="notes" [(ngModel)]="model.notes" rows="2" placeholder="Notes (optional)"
@@ -364,7 +364,7 @@
       </div>
     </li>
     <li *ngFor="let appt of appointments; trackBy: trackById">
-      <span *ngIf="appt.important" style="color:darkred;font-weight:600">[WAŻNE]</span>
+      <span *ngIf="appt.important" style="color:darkred;font-weight:600">[IMPORTANT]</span>
       {{ appt.date }} {{ appt.time || '' }} — {{ appt.title }}
     </li>
   </ul>
@@ -380,7 +380,7 @@
     </header>
 
     <div class="weekdays">
-      <div *ngFor="let d of ['Nd','Pn','Wt','Śr','Cz','Pt','Sb']" class="weekday">{{ d }}</div>
+      <div *ngFor="let d of ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']" class="weekday">{{ d }}</div>
     </div>
 
     <div class="weeks">
@@ -397,14 +397,14 @@
           </div>
 
           <div class="day-panel" *ngIf="expandedDays.has(day.iso)">
-            <div *ngIf="getAppointmentsForDate(day.iso).length === 0" class="empty small">Brak spotkań</div>
+            <div *ngIf="getAppointmentsForDate(day.iso).length === 0" class="empty small">No appointments</div>
             <div class="event-list">
               <div *ngFor="let e of getAppointmentsForDate(day.iso)" class="event-item" [class.important]="e.important">
                 <div class="event-title">{{ e.title }}</div>
                 <div class="event-time small">{{ (e.date + 'T' + (e.time || '00:00')) | date:'HH:mm' }}</div>
                 <div class="event-date small">{{ e.date | date:'dd.MM.yyyy' }}</div>
                 <div class="event-actions">
-                  <button class="btn btn-ghost" *ngIf="e.id !== undefined" (click)="deleteAppointment(e.id)">Usuń</button>
+                  <button class="btn btn-ghost" *ngIf="e.id !== undefined" (click)="deleteAppointment(e.id)">Delete</button>
                 </div>
               </div>
             </div>
@@ -416,5 +416,5 @@
   </section>
 </div>
 <footer class="app-footer">
-    <small>© 2025 Rafał Wójcicki</small>
+  <small>© 2025 Rafal Wojcicki</small>
 </footer>

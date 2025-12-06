@@ -2,10 +2,10 @@
 
 ## Prerequisites
 
-1. **Heroku CLI** installed: https://devcenter.heroku.com/articles/heroku-cli
-2. **Heroku account**: https://www.heroku.com
-3. **Git** installed and configured
-4. Your repository set up with remote origin
+1. **Heroku CLI**: https://devcenter.heroku.com/articles/heroku-cli
+2. **Heroku account**
+3. **Git** configured & remote set
+4. **Node 18** (project uses "engines": {"node": "18.x"})
 
 ## Step 1: Create Heroku App
 
@@ -14,17 +14,13 @@ heroku login
 heroku create your-app-name
 ```
 
-Replace `your-app-name` with your desired app name (must be unique across Heroku).
+Replace `your-app-name` with a unique app name.
 
 ## Step 2: Configure Environment Variables
 
 ```powershell
 heroku config:set NODE_ENV=production -a your-app-name
-heroku config:set API_URL=https://your-app-name.herokuapp.com -a your-app-name
-```
-
-Optional: Set custom database path
-```powershell
+# Optional: change SQLite path (file is ephemeral on dyno)
 heroku config:set DATABASE_URL=./appointments.db -a your-app-name
 ```
 
@@ -34,10 +30,7 @@ heroku config:set DATABASE_URL=./appointments.db -a your-app-name
 git push heroku main
 ```
 
-If your branch is named differently, use:
-```powershell
-git push heroku your-branch-name:main
-```
+If your branch is different, use `git push heroku your-branch:main`.
 
 ## Step 4: View Logs
 
@@ -73,17 +66,14 @@ heroku ps:scale web=1 -a your-app-name
 
 ## Database Persistence
 
-**Important**: SQLite database (`appointments.db`) is stored on the dyno's ephemeral filesystem. Data will be lost when the dyno restarts.
+**Important**: SQLite (`appointments.db`) lives on the dyno’s ephemeral filesystem — data is lost on restart/redeploy.
 
-**For production use**, consider:
-1. **Heroku Postgres Add-on**: Add PostgreSQL database
-   ```powershell
-   heroku addons:create heroku-postgresql:hobby-dev -a your-app-name
-   ```
-
-2. **AWS RDS**: Use Amazon RDS for better persistence
-
-3. **MongoDB Atlas**: Use cloud MongoDB
+For production, use a managed DB:
+1. **Heroku Postgres** (recommended)
+  ```powershell
+  heroku addons:create heroku-postgresql:hobby-dev -a your-app-name
+  ```
+2. or external (RDS, Atlas, etc.)
 
 ## Building with Docker
 
@@ -94,33 +84,6 @@ heroku container:login
 heroku container:push web -a your-app-name
 heroku container:release web -a your-app-name
 ```
-
-## Setting Up CI/CD (GitHub Actions)
-
-Create `.github/workflows/heroku-deploy.yml`:
-
-```yaml
-name: Deploy to Heroku
-
-on:
-  push:
-    branches: [ main ]
-
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: akhileshns/heroku-deploy@v3.14.0
-        with:
-          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          heroku_app_name: "your-app-name"
-          heroku_email: "your-email@example.com"
-```
-
-Add secrets to GitHub:
-1. Go to Settings → Secrets and variables → Actions
-2. Add `HEROKU_API_KEY` from: `heroku auth:token`
 
 ## Useful Links
 
