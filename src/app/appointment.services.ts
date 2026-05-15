@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { environment } from '../environments/environment';
 
 export interface Appointment {
@@ -15,7 +14,7 @@ export interface Appointment {
 @Injectable({
     providedIn: 'root'
 })
-export class AppoitmentService {
+export class AppointmentService {
     // Use environment.apiUrl when provided, otherwise fall back to relative path
     private base = (environment.apiUrl || '').replace(/\/$/, '');
     apiUrl = this.base ? `${this.base}/appointments` : '/appointments';

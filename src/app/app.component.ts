@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { AppoitmentService, Appointment } from './appointment.services';
+import {Component, OnInit} from '@angular/core';
+import {AppointmentService, Appointment} from './appointment.services';
 
 @Component({
   selector: 'app-root',
@@ -7,12 +7,11 @@ import { AppoitmentService, Appointment } from './appointment.services';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'appointment-app';
-
   appointments: Appointment[] = [];
   currentMonth: Date = new Date();
   calendarWeeks: { date: Date; iso: string; isMonth: boolean }[][] = [];
   expandedDays = new Set<string>();
+  showPopup = false;
 
   // Bound to the form inputs
   model: Partial<Appointment> = {
@@ -23,20 +22,20 @@ export class AppComponent implements OnInit {
     important: false
   };
 
-  constructor(private appointmentService: AppoitmentService) {}
+  constructor(private appointmentService: AppointmentService) {}
 
   ngOnInit(): void {
     this.buildCalendar();
     this.loadAppointments();
   }
 
-  loadAppointments() {
+  loadAppointments(): void {
     this.appointmentService.getAppointments().subscribe((data: Appointment[]) => {
       this.appointments = data;
     });
   }
 
-  addAppointment(form?: any) {
+  addAppointment(form?: { resetForm?: () => void }): void {
     if (!this.model.title || !this.model.date) {
       this.buildCalendar();
       return;
@@ -50,23 +49,22 @@ export class AppComponent implements OnInit {
     };
     this.appointmentService.addAppointment(appt).subscribe(() => {
       this.loadAppointments();
-      this.model = { title: '', date: '', time: '', notes: '', important: false };
+      this.model = {title: '', date: '', time: '', notes: '', important: false};
       if (form && form.resetForm) {
         form.resetForm();
       }
     });
   }
 
-  deleteAppointment(id: number) {
+  deleteAppointment(id: number): void {
     this.appointmentService.deleteAppointment(id).subscribe(() => {
       this.loadAppointments();
     });
   }
 
-  trackById(index: number, item: Appointment) {
+  trackById(index: number, item: Appointment): number | undefined {
     return item.id;
   }
-
 
   private isoDateOnly(d: Date | string): string {
     const date = typeof d === 'string' ? new Date(d) : d;
@@ -76,8 +74,8 @@ export class AppComponent implements OnInit {
     return `${year}-${month}-${day}`;
   }
 
-  private buildCalendar() {
-    const firstDayOfMonth = new Date(this.currentMonth.getFullYear(), 
+  private buildCalendar(): void {
+    const firstDayOfMonth = new Date(this.currentMonth.getFullYear(),
       this.currentMonth.getMonth(), 1);
     const startDay = new Date(firstDayOfMonth);
     startDay.setDate(startDay.getDate() - startDay.getDay());
@@ -89,32 +87,35 @@ export class AppComponent implements OnInit {
       const weekDays: { date: Date; iso: string; isMonth: boolean }[] = [];
       for (let day = 0; day < 7; day++) {
         const isMonth = cursor.getMonth() === this.currentMonth.getMonth();
-        weekDays.push({ date: new Date(cursor), iso: this.isoDateOnly(cursor), isMonth });
+        weekDays.push({date: new Date(cursor), iso: this.isoDateOnly(cursor), isMonth});
         cursor.setDate(cursor.getDate() + 1);
       }
       weeks.push(weekDays);
     }
-    
+
     this.calendarWeeks = weeks;
 
   }
 
-  prevMonth() {
+  prevMonth(): void {
     this.currentMonth = new Date(this.currentMonth.getFullYear(), this.currentMonth.getMonth() - 1, 1);
     this.buildCalendar();
   }
 
-  nextMonth() {
+  nextMonth(): void {
     this.currentMonth = new Date(this.currentMonth.getFullYear(), this.currentMonth.getMonth() + 1, 1);
     this.buildCalendar();
   }
 
-  toggleDay(iso: string) {
-    if (this.expandedDays.has(iso)) this.expandedDays.delete(iso);
-    else this.expandedDays.add(iso);
+  toggleDay(iso: string): void {
+    if (this.expandedDays.has(iso)) {
+      this.expandedDays.delete(iso);
+      return;
+    }
+    this.expandedDays.add(iso);
   }
 
-  getAppointmentsForDate(iso: string) {
+  getAppointmentsForDate(iso: string): Appointment[] {
     return this.appointments.filter(a => this.isoDateOnly(a.date) === iso);
   }
 
@@ -122,5 +123,11 @@ export class AppComponent implements OnInit {
     return this.appointments.some(a => this.isoDateOnly(a.date) === iso && !!a.important);
   }
 
+  openPopup(): void {
+    this.showPopup = true;
+  }
 
+  closePopup(): void {
+    this.showPopup = false;
+  }
 }
